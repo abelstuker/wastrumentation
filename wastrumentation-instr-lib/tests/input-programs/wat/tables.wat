@@ -26,7 +26,7 @@
 
 
   (func (export "main") (result i32)
-    
+
     ;; TEST: table.set
     i32.const 2
     ref.func $double
@@ -48,7 +48,7 @@
     i32.const 42
     call $assert_eq
 
-    ;; TEST: table.grow 
+    ;; TEST: table.grow
     ref.null func       ;; init null func ref to grow the table with
     i32.const 5         ;; size to grow the table by
     table.grow $table_0 ;; grow, returns old size
@@ -78,18 +78,18 @@
     table.copy $table_0 $table_0  ;; copy within the table
 
     i32.const 14                  ;; operand for double
-    i32.const 7                   ;; index of copied funcref (to $double) 
+    i32.const 7                   ;; index of copied funcref (to $double)
     call_indirect $table_0 (type $type_0)
     i32.const 28
     call $assert_eq
-    
+
     ;; TEST: table.init
     i32.const 0                   ;; dest index
     i32.const 0                   ;; elem segment index (funcref to $double and $triple)
     i32.const 2                   ;; number of elements to init
     table.init $table_0 $elem_0   ;; init table from elem segment
     i32.const 3                   ;; operand for triple
-    i32.const 1                   ;; index of init funcref (to $triple) 
+    i32.const 1                   ;; index of init funcref (to $triple)
     call_indirect $table_0 (type $type_0)
     i32.const 9
     call $assert_eq

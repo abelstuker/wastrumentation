@@ -195,6 +195,7 @@ where
             no_validation: NoValidate::Enable,
             rename_export_conflicts: RenameExportConflicts::Enable,
             multimemory: Multimemory::Enable,
+            multivalue: wasm_merge::options::Multivalue::Enable,
             bulk_memory: BulkMemory::Enable,
             bulk_memory_opt: BulkMemoryOpt::Enable,
             reference_types: ReferenceTypes::Enable,

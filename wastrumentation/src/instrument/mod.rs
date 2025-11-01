@@ -277,7 +277,7 @@ pub fn instrument<InstrumentationLanguage: LibGeneratable>(
 
     // table copy target
     if let Some(table_copy_trap) = table_copy {
-        let table_copy_trap_idx = module.install(&table_copy_trap);
+        let table_copy_trap_idx = module.install(table_copy_trap);
         let table_copy_get_src_idx = table_copy_get_source
             .as_ref()
             .map(|e| module.install(e))
@@ -302,7 +302,7 @@ pub fn instrument<InstrumentationLanguage: LibGeneratable>(
     }
 
     if let Some(table_init_trap) = table_init {
-        let table_init_trap_idx = module.install(&table_init_trap);
+        let table_init_trap_idx = module.install(table_init_trap);
         let table_init_get_elem_src_idx = table_init_get_element_source
             .as_ref()
             .map(|e| module.install(e))
