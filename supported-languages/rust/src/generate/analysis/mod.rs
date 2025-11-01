@@ -52,6 +52,9 @@ pub enum Hook {
     BlockPost,
     LoopPre,
     LoopPost,
+    RefFunc,
+    RefNull,
+    RefIsNull,
     TableGet,
     TableSet,
     TableSize,
@@ -94,6 +97,9 @@ impl Hook {
             BlockPost,
             LoopPre,
             LoopPost,
+            RefFunc,
+            RefNull,
+            RefIsNull,
             TableGet,
             TableSet,
             TableSize,
@@ -239,6 +245,15 @@ pub fn interface_from(hooks: &HashSet<Hook>) -> AnalysisInterface {
             }
             Hook::LoopPost => {
                 interface.post_loop = Some(AnalysisInterface::interface_post_loop());
+            }
+            Hook::RefFunc => {
+                interface.ref_func = Some(AnalysisInterface::interface_ref_func());
+            }
+            Hook::RefNull => {
+                interface.ref_null = Some(AnalysisInterface::interface_ref_null());
+            }
+            Hook::RefIsNull => {
+                interface.ref_is_null = Some(AnalysisInterface::interface_ref_is_null());
             }
             Hook::TableGet => {
                 interface.table_get = Some(AnalysisInterface::interface_table_get());

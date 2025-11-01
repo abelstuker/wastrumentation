@@ -6,6 +6,9 @@ use wasabi_wasm::{Function, GlobalOp, Idx, Module, Mutability, RefType, Val, Val
 
 #[derive(PartialEq, Eq, Copy, Clone, Debug)]
 pub enum Target {
+    RefFunc(Idx<Function>),
+    RefNull(Idx<Function>),
+    RefIsNull(Idx<Function>),
     TableGet(Idx<Function>),
     TableSet(Idx<Function>),
     TableSize(Idx<Function>),
@@ -56,6 +59,42 @@ fn transform(body: &BodyInner, target: Target, module: &mut Module) -> BodyInner
     for typed_instr @ TypedHighLevelInstr { instr, .. } in body {
         if typed_instr.is_uninstrumented() {
             match (target, instr) {
+                // ref.func x: [] -> [ref]
+                (Target::RefFunc(trap_idx), Instr::RefFunc(func_idx)) => {
+                    result.extend_from_slice(&[
+                        // Stack: []
+                        typed_instr.instrument_with(Instr::Const(Val::I32(
+                            i32::try_from(func_idx.to_u32()).unwrap(),
+                        ))),
+                        // Stack: [func_idx:I32]
+                    ]);
+                    result.extend_from_slice(&typed_instr.to_trap_call(&trap_idx));
+                    // Stack: []
+                    result.push(typed_instr.place_original(instr.clone()));
+                    // Stack: [ref]
+                    continue;
+                }
+
+                // ref.null x: [] -> [ref]
+                (Target::RefNull(trap_idx), Instr::RefNull(_ref_type)) => {
+                    // Stack: []
+                    result.extend_from_slice(&typed_instr.to_trap_call(&trap_idx));
+                    // Stack: []
+                    result.push(typed_instr.place_original(instr.clone()));
+                    // Stack: [ref]
+                    continue;
+                }
+
+                // ref.is_null: [ref] -> [i]
+                (Target::RefIsNull(trap_idx), Instr::RefIsNull) => {
+                    // Stack: [ref]
+                    result.push(typed_instr.place_original(instr.clone()));
+                    // Stack: [res:I32]
+                    result.extend_from_slice(&typed_instr.to_trap_call(&trap_idx));
+                    // Stack: [res_new:I32]
+                    continue;
+                }
+
                 // table.get x: [i] -> [ref]
                 (Target::TableGet(trap_idx), Instr::TableGet(table_idx)) => {
                     result.extend_from_slice(&[

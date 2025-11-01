@@ -121,6 +121,9 @@ pub fn instrument<InstrumentationLanguage: LibGeneratable>(
         f64_load,
         i32_load,
         i64_load,
+        ref_func,
+        ref_null,
+        ref_is_null,
         table_get,
         table_set,
         table_size,
@@ -255,6 +258,9 @@ pub fn instrument<InstrumentationLanguage: LibGeneratable>(
         (f64_load, (|i| Box::new(F64Load(i)))),
         (i32_load, (|i| Box::new(I32Load(i)))),
         (i64_load, (|i| Box::new(I64Load(i)))),
+        (ref_func, (|i| Box::new(RefFunc(i)))),
+        (ref_null, (|i| Box::new(RefNull(i)))),
+        (ref_is_null, (|i| Box::new(RefIsNull(i)))),
         (table_get, (|i| Box::new(TableGet(i)))),
         (table_set, (|i| Box::new(TableSet(i)))),
         (table_size, (|i| Box::new(TableSize(i)))),
@@ -263,7 +269,7 @@ pub fn instrument<InstrumentationLanguage: LibGeneratable>(
         // table copy is currently handled separately
         // table init is currently handled separately
         (table_drop, (|i| Box::new(ElemDrop(i)))),
-    ] as [(&Option<WasmExport>, TFn); 81];
+    ] as [(&Option<WasmExport>, TFn); 84];
 
     let mut targets: Vec<Box<dyn TransformationStrategy>> = traps_target_generators
         .into_iter()

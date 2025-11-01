@@ -85,6 +85,10 @@ pub const TRAP_NAME_POST_BLOCK: &str = "trap_block_post";
 pub const TRAP_NAME_PRE_LOOP: &str = "trap_loop_pre";
 pub const TRAP_NAME_POST_LOOP: &str = "trap_loop_post";
 
+pub const TRAP_NAME_REF_FUNC: &str = "trap_ref_func";
+pub const TRAP_NAME_REF_NULL: &str = "trap_ref_null";
+pub const TRAP_NAME_REF_IS_NULL: &str = "trap_ref_is_null";
+
 pub const TRAP_NAME_TABLE_GET: &str = "trap_table_get";
 pub const TRAP_NAME_TABLE_SET: &str = "trap_table_set";
 pub const TRAP_NAME_TABLE_COPY: &str = "trap_table_copy";
@@ -212,6 +216,9 @@ pub struct AnalysisInterface {
     pub f64_load: Option<WasmExport>,
     pub i32_load: Option<WasmExport>,
     pub i64_load: Option<WasmExport>,
+    pub ref_null: Option<WasmExport>,
+    pub ref_func: Option<WasmExport>,
+    pub ref_is_null: Option<WasmExport>,
     pub table_get: Option<WasmExport>,
     pub table_set: Option<WasmExport>,
     pub table_size: Option<WasmExport>,
@@ -360,6 +367,9 @@ simple_interfaces! {
     interface_post_block            TRAP_NAME_POST_BLOCK                         :                                                          /* void */ /*fidx*/ I64 /*iidx*/ I64 =>                /*void */,
     interface_pre_loop              TRAP_NAME_PRE_LOOP                           :                                       /*input_c*/ I32 /*arity*/ I32 /*fidx*/ I64 /*iidx*/ I64 =>                /*void */,
     interface_post_loop             TRAP_NAME_POST_LOOP                          :                                                          /* void */ /*fidx*/ I64 /*iidx*/ I64 =>                /*void */,
+    interface_ref_func              TRAP_NAME_REF_FUNC                           :                                                   /*func_idx:*/ I32 /*fidx*/ I64 /*iidx*/ I64 =>                /*void*:*/,
+    interface_ref_null              TRAP_NAME_REF_NULL                           :                                                                     /*fidx*/ I64 /*iidx*/ I64 =>                /*void:*/,
+    interface_ref_is_null           TRAP_NAME_REF_IS_NULL                        :                                                        /*res:*/ I32 /*fidx*/ I64 /*iidx*/ I64 =>        /*new_res:*/ I32,
     interface_table_get             TRAP_NAME_TABLE_GET                          :                                   /*index:*/ I32 /*table_idx:*/ I32 /*fidx*/ I64 /*iidx*/ I64 =>      /*new_index:*/ I32,
     interface_table_set             TRAP_NAME_TABLE_SET                          :                                  /*index:*/ I32  /*table_idx:*/ I32 /*fidx*/ I64 /*iidx*/ I64 =>      /*new_index:*/ I32,
     interface_table_size            TRAP_NAME_TABLE_SIZE                         :                                    /*size:*/ I32 /*table_idx:*/ I32 /*fidx*/ I64 /*iidx*/ I64 =>       /*new_size:*/ I32,

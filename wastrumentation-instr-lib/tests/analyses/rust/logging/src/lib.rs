@@ -261,6 +261,30 @@ advice! { loop_ post (
     }
 }
 
+advice! { ref_func (
+        func_index: WasmValue,
+        location: Location,
+    ) {
+        println!("[ANALYSIS:] ref_func {func_index:#?}, location: {location:?}");
+    }
+}
+
+advice! { ref_null (
+        location: Location,
+    ) {
+        println!("[ANALYSIS:] ref_null, location: {location:?}");
+    }
+}
+
+advice! { ref_is_null (
+        res: WasmValue,
+        location: Location,
+    ) {
+        println!("[ANALYSIS:] ref_is_null {res:#?}, location: {location:?}");
+        res
+    }
+}
+
 advice! { table_set (
     element_index: WasmValue,
     table_index: FunctionTableIndex,

@@ -1385,6 +1385,52 @@ macro_rules! advice {
             $body
         }
     };
+    /////////////////////
+    // REFERENCE TYPES //
+    /////////////////////
+    (ref_func (
+        $func_index: ident: WasmValue,
+        $location_ident: ident: Location $(,)?
+    ) $body:block) => {
+        #[no_mangle]
+        extern "C" fn trap_ref_func(
+            func_index: i32,
+            funct_index: i64,
+            instr_index: i64,
+        ) {
+            let $func_index = func_index;
+            let $location_ident = Location::new(funct_index, instr_index);
+            $body;
+        }
+    };
+    (ref_null (
+        $location_ident: ident: Location $(,)?
+    ) $body:block) => {
+        #[no_mangle]
+        extern "C" fn trap_ref_null(
+            funct_index: i64,
+            instr_index: i64,
+        ) {
+            let $location_ident = Location::new(funct_index, instr_index);
+            $body;
+        }
+    };
+    (ref_is_null (
+        $res: ident: WasmValue,
+        $location_ident: ident: Location $(,)?
+    ) $body:block) => {
+        #[no_mangle]
+        extern "C" fn trap_ref_is_null(
+            res: i32,
+            funct_index: i64,
+            instr_index: i64,
+        ) -> i32 {
+            let $res = WasmValue::I32(res);
+            let $location_ident = Location::new(funct_index, instr_index);
+            let new_res: WasmValue = $body;
+            new_res.as_i32()
+        }
+    };
     ////////////
     // TABLES //
     ////////////

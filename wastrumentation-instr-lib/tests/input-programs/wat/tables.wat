@@ -27,6 +27,16 @@
 
   (func (export "main") (result i32)
 
+    ;; TEST: ref.func, ref.null and ref.is_null
+    ref.func $double
+    ref.is_null
+    i32.const 0
+    call $assert_eq
+    ref.null func
+    ref.is_null
+    i32.const 1
+    call $assert_eq
+
     ;; TEST: table.set
     i32.const 2
     ref.func $double
