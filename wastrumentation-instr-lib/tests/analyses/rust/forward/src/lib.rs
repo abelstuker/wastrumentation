@@ -280,3 +280,80 @@ advice! { loop_ post (
         let _ = location;
     }
 }
+
+advice! { table_set (
+    element_index: WasmValue,
+    table_index: FunctionTableIndex,
+    location: Location,
+    ) {
+        element_index
+    }
+}
+
+advice! { table_get (
+        element_index: WasmValue,
+        table_index: FunctionTableIndex,
+        location: Location,
+    ) {
+        element_index
+    }
+}
+
+advice! { table_size (
+        table_size: WasmValue,
+        table_index: FunctionTableIndex,
+        location: Location,
+    ) {
+        table_size
+    }
+}
+
+advice! { table_grow (
+        grow_size: WasmValue,
+        table_index: FunctionTableIndex,
+        location: Location,
+    ) {
+        grow_size
+    }
+}
+
+advice! { table_fill (
+        index: WasmValue,
+        fill_size: WasmValue,
+        table_index: FunctionTableIndex,
+        location: Location,
+    ) {
+        index
+    }
+}
+
+advice! { table_copy (
+        dst_element_index: WasmValue,
+        src_element_index: WasmValue,
+        copy_size: WasmValue,
+        dst_table_index: FunctionTableIndex,
+        src_table_index: FunctionTableIndex,
+        location: Location,
+    ) {
+        (dst_element_index, src_element_index, copy_size)
+    }
+}
+
+advice! { table_init (
+        destination_table_offset: WasmValue,
+        source_element_offset: WasmValue,
+        init_size: WasmValue,
+        table_index: FunctionTableIndex,
+        element_index: ElementIndex,
+        location: Location,
+    ) {
+        (destination_table_offset, source_element_offset, init_size)
+    }
+}
+
+advice! { elem_drop (
+        element_index: ElementIndex,
+        location: Location,
+    ) {
+    }
+}
