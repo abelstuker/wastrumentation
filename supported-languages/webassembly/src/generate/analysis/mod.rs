@@ -58,7 +58,7 @@ pub enum Hook {
     TableFill,
     TableCopy,
     TableInit,
-    TableDrop,
+    ElemDrop,
 }
 
 impl Hook {
@@ -100,7 +100,7 @@ impl Hook {
             TableFill,
             TableCopy,
             TableInit,
-            TableDrop,
+            ElemDrop,
         ])
     }
 }
@@ -272,8 +272,8 @@ pub fn interface_from(hooks: &HashSet<Hook>) -> AnalysisInterface {
                 interface.table_init_get_size =
                     Some(AnalysisInterface::interface_table_init_get_size());
             }
-            Hook::TableDrop => {
-                interface.table_drop = Some(AnalysisInterface::interface_table_drop());
+            Hook::ElemDrop => {
+                interface.elem_drop = Some(AnalysisInterface::interface_elem_drop());
             }
         }
     }

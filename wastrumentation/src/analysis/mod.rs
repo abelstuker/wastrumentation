@@ -232,7 +232,7 @@ pub struct AnalysisInterface {
     pub table_init_get_element_source: Option<WasmExport>,
     pub table_init_get_table_destination: Option<WasmExport>,
     pub table_init_get_size: Option<WasmExport>,
-    pub table_drop: Option<WasmExport>,
+    pub elem_drop: Option<WasmExport>,
 }
 
 pub struct ProcessedAnalysis<Language: SourceCodeBound> {
@@ -383,5 +383,5 @@ simple_interfaces! {
     interface_table_init_get_element_source TRAP_NAME_TABLE_INIT_GET_ELEMENT_SOURCE :                                                                                            =>    /*element-idx:*/ I32,
     interface_table_init_get_table_destination TRAP_NAME_TABLE_INIT_GET_TABLE_DESTINATION :                                                                                      =>      /*table-idx:*/ I32,
     interface_table_init_get_size   TRAP_NAME_TABLE_INIT_GET_SIZE                :                                                                                               =>           /*size:*/ I32,
-    interface_table_drop            TRAP_NAME_ELEM_DROP                          :                                                  /*elem_idx:*/ I32 /*fidx*/ I64 /*iidx*/ I64 =>                /*void*/ ,
+    interface_elem_drop            TRAP_NAME_ELEM_DROP                          :                                                  /*elem_idx:*/ I32 /*fidx*/ I64 /*iidx*/ I64 =>                /*void*/ ,
 }

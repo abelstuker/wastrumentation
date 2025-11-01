@@ -1574,6 +1574,9 @@
               "BlockPost",
               "LoopPre",
               "LoopPost",
+              "RefFunc",
+              "RefNull",
+              "RefIsNull",
               "TableGet",
               "TableSet",
               "TableSize",
@@ -1581,7 +1584,7 @@
               "TableFill",
               "TableCopy",
               "TableInit",
-              "TableDrop"
+              "ElemDrop"
             ],
             "manifest": "./tests/analyses/rust/forward/Cargo.toml"
           }

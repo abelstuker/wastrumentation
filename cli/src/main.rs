@@ -65,6 +65,9 @@ enum Hook {
     BlockPost,
     LoopPre,
     LoopPost,
+    RefFunc,
+    RefNull,
+    RefIsNull,
     TableGet,
     TableSet,
     TableSize,
@@ -106,6 +109,9 @@ impl From<&Hook> for AnalysisHook {
             Hook::BlockPost => AnalysisHook::BlockPost,
             Hook::LoopPre => AnalysisHook::LoopPre,
             Hook::LoopPost => AnalysisHook::LoopPost,
+            Hook::RefFunc => AnalysisHook::RefFunc,
+            Hook::RefNull => AnalysisHook::RefNull,
+            Hook::RefIsNull => AnalysisHook::RefIsNull,
             Hook::TableGet => AnalysisHook::TableGet,
             Hook::TableSet => AnalysisHook::TableSet,
             Hook::TableSize => AnalysisHook::TableSize,
@@ -113,7 +119,7 @@ impl From<&Hook> for AnalysisHook {
             Hook::TableFill => AnalysisHook::TableFill,
             Hook::TableCopy => AnalysisHook::TableCopy,
             Hook::TableInit => AnalysisHook::TableInit,
-            Hook::ElemDrop => AnalysisHook::TableDrop,
+            Hook::ElemDrop => AnalysisHook::ElemDrop,
         }
     }
 }

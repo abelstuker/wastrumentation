@@ -137,7 +137,7 @@ pub fn instrument<InstrumentationLanguage: LibGeneratable>(
         table_init_get_element_source,
         table_init_get_table_destination,
         table_init_get_size,
-        table_drop,
+        elem_drop,
     } = analysis_interface;
 
     let (mut module, _offsets, _issue) =
@@ -268,7 +268,7 @@ pub fn instrument<InstrumentationLanguage: LibGeneratable>(
         (table_fill, (|i| Box::new(TableFill(i)))),
         // table copy is currently handled separately
         // table init is currently handled separately
-        (table_drop, (|i| Box::new(ElemDrop(i)))),
+        (elem_drop, (|i| Box::new(ElemDrop(i)))),
     ] as [(&Option<WasmExport>, TFn); 84];
 
     let mut targets: Vec<Box<dyn TransformationStrategy>> = traps_target_generators
